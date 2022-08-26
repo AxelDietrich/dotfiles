@@ -77,6 +77,7 @@ colorscheme xcodedark
 autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
 
 lua require("axdietrich")
+lua require('Comment').setup()
 
 nnoremap ff <cmd>Telescope find_files<cr>
 nnoremap fg <cmd>Telescope live_grep<cr>

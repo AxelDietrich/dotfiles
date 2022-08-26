@@ -37,11 +37,11 @@ else
 endif
 
 call plug#begin()
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/nvim-cmp'
+  " Plug 'hrsh7th/cmp-nvim-lsp'
+  " Plug 'hrsh7th/cmp-buffer'
+  " Plug 'hrsh7th/cmp-path'
+  " Plug 'hrsh7th/cmp-cmdline'
+  " Plug 'hrsh7th/nvim-cmp'
 
 	Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -80,5 +80,6 @@ lua require("axdietrich")
 lua require('Comment').setup()
 
 nnoremap ff <cmd>Telescope find_files<cr>
-nnoremap fg <cmd>Telescope live_grep<cr>
+nnoremap fi <cmd>Telescope live_grep<cr>
 nnoremap fb <cmd>Telescope buffers<cr>
+" vim.lsp.set_log_level("debug")

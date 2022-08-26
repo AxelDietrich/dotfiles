@@ -60,8 +60,8 @@ call plug#begin()
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim' 
 
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 "  Plug 'ray-x/go.nvim'
   Plug 'tpope/vim-fugitive'
@@ -74,7 +74,7 @@ call plug#end()
 set termguicolors
 colorscheme xcodedark
 
-autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
+" autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
 
 lua require("axdietrich")
 lua require('Comment').setup()

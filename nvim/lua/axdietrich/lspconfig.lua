@@ -5,13 +5,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Setup nvim-cmp.
 local cmp = require("cmp")
-local source_mapping = {
-	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
-	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
-	path = "[Path]",
-}
 
 cmp.setup({
 	snippet = {
@@ -49,55 +42,68 @@ cmp.setup({
 
 		{ name = "buffer" },
 	},
-})
+})local cmp = require'cmp'
 
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if ou want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
---local function config(_config)
-	--return vim.tbl_deep_extend("force", {
---		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
---	}, _config or {})
---end
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it. 
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
 
---[[  I cannot seem to get this woring on new computer..
-require("lspconfig").clangd.setup(config({
-	cmd = { "clangd", "--background-index", "--log=verbose" },
-    root_dir = function()
-        print("clangd-Rootdir", vim.loop.cwd())
-		return vim.loop.cwd()
-	end,
-}))
---]]
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
 
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-
-
-local opts = {
-	-- whether to highlight the currently hovered symbol
-	-- disable if your cpu usage is higher than you want it
-	-- or you just hate the highlight
-	-- default: true
-	highlight_hovered_item = true,
-
-	-- whether to show outline guides
-	-- default: true
-	show_guides = true,
-}
-
-
-local snippets_paths = function()
-	local plugins = { "friendly-snippets" }
-	local paths = {}
-	local path
-	local root_path = vim.env.HOME .. "/.vim/plugged/"
-	for _, plug in ipairs(plugins) do
-		path = root_path .. plug
-		if vim.fn.isdirectory(path) ~= 0 then
-			table.insert(paths, path)
-		end
-	end
-	return paths
-end
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end

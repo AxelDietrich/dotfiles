@@ -1,7 +1,7 @@
 syntax on
 set nu ru et
 set ts=2 sts=2 sw=2
-set cursorline
+" set cursorline
 set hlsearch
 set number
 set relativenumber
@@ -20,7 +20,7 @@ set splitbelow splitright
 set title
 set ttimeoutlen=0
 set wildmenu
-set background=dark
+"set background=dark
 set clipboard=unnamedplus
 set completeopt=noinsert,menuone,noselect
 set inccommand=split
@@ -28,20 +28,23 @@ set t_Co=256
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-" True color if available
-let term_program=$TERM_PROGRAM
+" " True color if available
+" let term_program=$TERM_PROGRAM
+"
+" " Check for conflicts with Apple Terminal app
+" if term_program !=? 'Apple_Terminal'
+"     set termguicolors
+" else
+"     if $TERM !=? 'xterm-256color'
+"         set termguicolors
+"     endif
+" endif
 
-" Check for conflicts with Apple Terminal app
-if term_program !=? 'Apple_Terminal'
-    set termguicolors
-else
-    if $TERM !=? 'xterm-256color'
-        set termguicolors
-    endif
-endif
 
 call plug#begin()
-  Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'Mofiqul/vscode.nvim' 
+
+Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
@@ -50,7 +53,7 @@ call plug#begin()
 	Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 
-  Plug 'arzg/vim-colors-xcode'
+"  Plug 'arzg/vim-colors-xcode'
 
 	Plug 'jiangmiao/auto-pairs'
 
@@ -70,14 +73,17 @@ call plug#begin()
 "  Plug 'ray-x/go.nvim'
   Plug 'tpope/vim-fugitive'
   Plug 'theprimeagen/vim-be-good'
+" Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+" " Plug 'ryanoasis/vim-devicons' Icons without colours
+" Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
   "Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
 set termguicolors
-colorscheme xcodedark
-
+"colorscheme xcodedark
+colorscheme vscode
 " autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
 
 lua require("axdietrich")
@@ -86,4 +92,5 @@ lua require('Comment').setup()
 nnoremap ff <cmd>Telescope find_files<cr>
 nnoremap fi <cmd>Telescope live_grep<cr>
 nnoremap fb <cmd>Telescope buffers<cr>
-" vim.lsp.set_log_level("debug")
+
+au BufWritePost *.go !gofmt -w %

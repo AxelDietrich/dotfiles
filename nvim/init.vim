@@ -20,13 +20,14 @@ set splitbelow splitright
 set title
 set ttimeoutlen=0
 set wildmenu
-"set background=dark
+" set background=dark
 set clipboard=unnamedplus
 set completeopt=noinsert,menuone,noselect
 set inccommand=split
-set t_Co=256
-let &t_ZH="\e[3m"
-let &t_ZR="\e[23m"
+
+" set t_Co=256
+" let &t_ZH="\e[3m"
+" let &t_ZR="\e[23m"
 
 " " True color if available
 " let term_program=$TERM_PROGRAM
@@ -93,4 +94,5 @@ nnoremap ff <cmd>Telescope find_files<cr>
 nnoremap fi <cmd>Telescope live_grep<cr>
 nnoremap fb <cmd>Telescope buffers<cr>
 
-au BufWritePost *.go !gofmt -w %
+au BufWritePost *.go :silent! !gofmt -w %
+hi LineNr guibg=none guifg=#FFFFFF 

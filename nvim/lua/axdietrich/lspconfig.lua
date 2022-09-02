@@ -42,9 +42,9 @@ cmp.setup({
 
 		{ name = "buffer" },
 	},
-  completion = {
-    autocomplete = false,
-  },
+  -- completion = {
+  --   autocomplete = true,
+  -- },
 })
 local cmp = require'cmp'
 
@@ -68,6 +68,8 @@ local cmp = require'cmp'
         c = cmp.mapping.close(),
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
+      ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
@@ -222,7 +224,7 @@ lspconfig.gopls.setup {
 
 -- Lua:
 -- For dark theme (neovim's default)
-vim.o.background = 'dark'
+-- vim.o.background = 'dark'
 -- For light theme
 -- vim.o.background = 'light'
 
@@ -234,12 +236,12 @@ require('vscode').setup({
     -- Enable italic comment
     italic_comments = true,
 
-    -- Disable nvim-tree background color
-    disable_nvimtree_bg = true,
-
+    -- -- Disable nvim-tree background color
+    -- disable_nvimtree_bg = true,
+    --
     -- Override colors (see ./lua/vscode/colors.lua)
     color_overrides = {
-        vscLineNumber = '#FFFFFF',
+        vscLineNumber = '#000000',
     },
 
     -- Override highlight groups (see ./lua/vscode/theme.lua)

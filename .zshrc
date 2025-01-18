@@ -12,3 +12,5 @@ precmd() {
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
+
+eval $(keychain --eval --quiet --agents ssh id_ed25519)

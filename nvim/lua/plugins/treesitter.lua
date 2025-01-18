@@ -1,0 +1,13 @@
+-- return function()
+--   require("nvim-treesitter.configs").setup({
+--     ensure_installed = { "c", "cpp", "lua", "go" },
+--     highlight = {
+--       enable = true,
+--       disable = function(_, buf)
+--         local max_filesize = 100 * 1024
+--         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+--         return ok and stats and stats.size > max_filesize
+--       end,
+--     },
+--   })
+-- end

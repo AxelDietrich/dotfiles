@@ -15,4 +15,5 @@ require("lazy").setup({
   -- Miscellaneous
   { "jiangmiao/auto-pairs" },
   { "numToStr/Comment.nvim", config = require("plugins.comment") },
+  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, config = require("plugins.lualine") }
 })
